@@ -1,0 +1,71 @@
+* {
+  margin: 0;
+}
+h1 {
+  text-align: center;
+  padding: 0.5em;
+}
+.content {
+  text-align: center;
+}
+.calendar-active {
+  margin: auto;
+}
+
+.calendar-active:focus + #calendar {
+  display: block;
+}
+#calendar {
+  border: 2px solid black;
+  border-radius: 1rem;
+  max-width: 400px;
+  background-color: #fffafa;
+  text-align: center;
+  display: none;
+  margin: auto;
+
+}
+#daysCalendar {
+  border-collapse: separate;
+  border-spacing: 6px;
+}
+#daysCalendar th,
+#daysCalendar td {
+  width: 70px;
+  height: 30px;
+  cursor: pointer;
+}
+#daysCalendar th {
+  color: #990099;
+  background-color: #B1BDC5;
+}
+#daysCalendar td {
+  color: #492736;
+  background-color: #DADDE2;
+}
+#before {
+  float: left;
+  width: 100px;
+  font: bold 12pt arial;
+  padding: 0.5em 0.1em;
+  cursor: pointer;
+}
+#after {
+  float: right;
+  width: 100px;
+  font: bold 12pt arial;
+  padding: 0.5em 0.1em;
+  cursor: pointer;
+}
+#before:hover {
+  color: blue;
+  text-decoration: underline;
+}
+#after:hover {
+  color: blue;
+  text-decoration: underline;
+}
+#titulos {
+  font: normal 20pt "arial black";
+  padding: 0.2em;
+}
