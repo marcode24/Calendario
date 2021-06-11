@@ -4,7 +4,7 @@ let today = new Date();
 let dayNow = today.getDate();
 let monthNow = today.getMonth();
 let yearNow = today.getFullYear();
-let title = document.getElementById("titulos");
+let title = document.getElementById("titles");
 let beforeMonth = document.getElementById("before");
 let afterMonth = document.getElementById("after");
 let firtsFila = document.getElementById("fila0");
@@ -20,10 +20,24 @@ let $miCalendar = document.getElementById('calendar');
 $calendarActive.addEventListener('focus', () => {
     createDate();
     $miCalendar.style.display = 'block';
-})
+});
 
 $calendarActive.addEventListener('focusout', () => {
     createDate();
+});
+
+$calendarActive.addEventListener('keyup', (event) => {
+    $miCalendar.style.display = 'none';
+    $date = event.target.value;
+    $date = $date.split('/');
+    if($date.length === 3) {
+        let year = Number($date[2]);
+        const myMonth = Number($date[1]) - 1;
+        if(myMonth < 0 || myMonth > 11) return;
+        if(year < 1 ) return;
+        $miCalendar.style.display = 'block';
+        return createDate();
+    }
 })
 
 function headerCalendar() {
@@ -57,32 +71,32 @@ function writeDays() {
     let firstDay  = firtsMonth.getDate();
     let prcelda = firstDay - prsem;
     let start = firtsMonth.setDate(prcelda)
-    let diames = new Date();
-    diames.setTime(start);
+    let myDate = new Date();
+    myDate.setTime(start);
     for (i = 1; i < 7; i++) {
         fila = document.getElementById("fila"+i);
         for (j = 0; j<7; j++) {
-            let midia = diames.getDate()
-            let mimes = diames.getMonth()
-            let mianno = diames.getFullYear()
+            let myDay = myDate.getDate()
+            let myMonth = myDate.getMonth()
+            let year = myDate.getFullYear()
             let celda = fila.getElementsByTagName("td")[j];
-            celda.innerHTML = midia;
-            (mimes === monthCalendar) ? celda.setAttribute('id', midia) : '';
-            (mimes === monthCalendar) ? celda.setAttribute('onclick', `selectDay(${midia}, ${mimes}, ${mianno})`) : '';
+            celda.innerHTML = myDay;
+            (myMonth === monthCalendar) ? celda.setAttribute('id', myDay) : '';
+            (myMonth === monthCalendar) ? celda.setAttribute('onclick', `selectDay(${myDay}, ${myMonth}, ${year})`) : '';
             celda.style.backgroundColor = "#DADDE2";
             celda.style.color = "#492736";
             if (j == 6) {
                 celda.style.color = "#f11445";
             }
-            if (mimes != monthCalendar) {
+            if (myMonth != monthCalendar) {
                 celda.style.color = "#a0babc";
             }
-            if (mimes == monthNow && midia == dayNow && mianno == yearNow ) {
+            if (myMonth == monthNow && myDay == dayNow && year == yearNow ) {
                 celda.style.backgroundColor = "#889FA5";
-                celda.innerHTML = "<cite title='Fecha Actual'>"+midia+"</cite>";
+                celda.innerHTML = "<cite title='Fecha Actual'>"+myDay+"</cite>";
             }
-            midia = midia+1;
-            diames.setDate(midia);
+            myDay = myDay+1;
+            myDate.setDate(myDay);
         }
     }
 }
@@ -99,9 +113,9 @@ function createBeforeMonth() {
 
 function createAfterMonth() {
     let newMonth = new Date()
-    let tiempounix = firtsMonth.getTime()
-    tiempounix = tiempounix+(45*24*60*60*1000)
-    newMonth.setTime(tiempounix)
+    let time= firtsMonth.getTime()
+    time = time + (45*24*60*60*1000)
+    newMonth.setTime(time);
     monthCalendar = newMonth.getMonth()
     yearCalendar = newMonth.getFullYear()
     headerCalendar();
@@ -111,21 +125,15 @@ function createAfterMonth() {
 function createDate() {
     let $date = document.querySelector('.calendar-active').value;
     $date = $date.split('/');
-    let mianno = $date[2];
-    const mimes = $date[1] - 1;
-    if(isNaN(mianno) || mianno<1) {
-        mianno = 2021;
-        alert("El año no es válido:\n debe ser un número mayor que 0")
-    }
-    else {
-        mife = new Date();
-        mife.setMonth(mimes);
-        mife.setFullYear(mianno);
-        monthCalendar = mife.getMonth();
-        yearCalendar = mife.getFullYear();
-        headerCalendar();
-        writeDays();
-    }
+    let year = Number($date[2]);
+    const myMonth = $date[1] - 1;
+    myDate = new Date();
+    myDate.setMonth(myMonth);
+    myDate.setFullYear(year);
+    monthCalendar = myDate.getMonth();
+    yearCalendar = myDate.getFullYear();
+    headerCalendar();
+    writeDays();
 }
 
 function selectDay(day, month, year) {
